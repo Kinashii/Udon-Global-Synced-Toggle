@@ -12,13 +12,12 @@ public class kinUGSToggle : UdonSharpBehaviour
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        if (Networking.LocalPlayer.isMaster)
-        {
-            if (isOn)
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
-            else
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
-        }
+        if (!Networking.LocalPlayer.isMaster) return;
+
+        if (isOn)
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
+        else
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
     }
 
     public override void Interact()
