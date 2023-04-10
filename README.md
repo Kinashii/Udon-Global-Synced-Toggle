@@ -1,3 +1,3 @@
-Make a new U# script by right clicking your project and clicking Create/U# Script.
+Make a new U# script by right clicking your project and clicking Create/U# Script, and name it "kinUGSToggle".
 
 ![Tutorial Image](https://cdn.discordapp.com/attachments/922280244264697857/1094940178738577499/image.png)
