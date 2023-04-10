@@ -23,25 +23,15 @@ public class kinUGSToggle : UdonSharpBehaviour
 
     public override void Interact()
     {
+        isOn = !isOn;
+        
         if (isOn)
-        {
-            isOn = false;
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
-        }
         else
-        {
-            isOn = true;
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
-        }
     }
 
-    public void toggleOn()
-    {
-        objectToToggle.SetActive(true);
-    }
+    public void toggleOn() { objectToToggle.SetActive(true); }
 
-    public void toggleOff()
-    {
-        objectToToggle.SetActive(false);
-    }
+    public void toggleOff() { objectToToggle.SetActive(false); }
 }
