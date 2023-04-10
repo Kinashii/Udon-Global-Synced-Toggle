@@ -15,13 +15,9 @@ public class kinUGSToggle : UdonSharpBehaviour
         if (Networking.LocalPlayer.isMaster)
         {
             if (isOn)
-            {
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
-            }
             else
-            {
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
-            }
         }
     }
 
