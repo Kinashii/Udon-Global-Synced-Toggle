@@ -3,35 +3,49 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-public class kinUGSToggle : UdonSharpBehaviour
+namespace xyz.kinashi
 {
-    // Global synced toggle made by: Kinashi ღ#2321
-
-    public GameObject objectToToggle;
-    [UdonSynced] public bool isOn;
-
-    public override void OnPlayerJoined(VRCPlayerApi player)
+    public class kinUGSToggle : UdonSharpBehaviour
     {
-        if (Networking.LocalPlayer.isMaster)
+        // Declare global synced toggle made by Kinashi ღ#2321
+        [Tooltip("The object to toggle on/off.")]
+        public GameObject objectToToggle;
+
+        [UdonSynced] 
+        [Tooltip("Toggle state.")] 
+        public bool isOn;
+
+        // Triggered when a player joins the game.
+        public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            if (isOn)
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
-            else
-                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
+            // Only the master client can change the toggle state.
+            if (Networking.LocalPlayer.isMaster)
+            {
+                // Toggle object state based on the current toggle state.
+                if (isOn)
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
+                else
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
+            }
         }
+
+        // Triggered when a player interacts with the object.
+        public override void Interact()
+        {
+            // Toggle the current state of the object.
+            isOn = !isOn;
+
+            // Toggle object state based on the new toggle state.
+            if (isOn)
+                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
+            else
+                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
+        }
+
+        // Turn the object on.
+        public void toggleOn() { objectToToggle.SetActive(true); }
+
+        // Turn the object off.
+        public void toggleOff() { objectToToggle.SetActive(false); }
     }
-
-    public override void Interact()
-    {
-        isOn = !isOn;
-        
-        if (isOn)
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOff");
-        else
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "toggleOn");
-    }
-
-    public void toggleOn() { objectToToggle.SetActive(true); }
-
-    public void toggleOff() { objectToToggle.SetActive(false); }
 }
