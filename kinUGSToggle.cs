@@ -11,9 +11,8 @@ namespace xyz.kinashi
         [Tooltip("The object to toggle on/off.")]
         public GameObject objectToToggle;
 
-        [UdonSynced] 
         [Tooltip("Toggle state.")] 
-        public bool isOn;
+        [UdonSynced] public bool isOn;
 
         // Triggered when a player joins the game.
         public override void OnPlayerJoined(VRCPlayerApi player)
@@ -43,9 +42,9 @@ namespace xyz.kinashi
         }
 
         // Turn the object on.
-        public void toggleOn() { objectToToggle.SetActive(true); }
+        public void toggleOn() => objectToToggle.SetActive(true);
 
         // Turn the object off.
-        public void toggleOff() { objectToToggle.SetActive(false); }
+        public void toggleOff() => objectToToggle.SetActive(false);
     }
 }
